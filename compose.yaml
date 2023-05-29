@@ -1,0 +1,19 @@
+---
+services:
+
+  emulator:
+    image: golang:1.20.4-bullseye
+    ports:
+      - ${PORT-8000}:8000
+    volumes:
+      - .:/go/src/github.com/kauche/cloud-run-api-emulator:cached
+      - go-pkg-mod:/go/pkg/mod:cached
+      - ${GOCACHE:-~/.cache/go-build}:/tmp/go-build
+    working_dir: /go/src/github.com/kauche/cloud-run-api-emulator
+    command: go run -ldflags "-s -w -extldflags -static" ./cmd/cloud-run-api-emulator --data ./bin/cloud-run-api-emulator.db
+    environment:
+      CGO_ENABLED: 0
+      GOCACHE: /tmp/go-build
+
+volumes:
+  go-pkg-mod:
