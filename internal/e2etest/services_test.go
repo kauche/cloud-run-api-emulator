@@ -48,6 +48,11 @@ func TestServices(t *testing.T) {
 			ServiceId: fmt.Sprintf("test-service-%d", i),
 			Service: &runpb.Service{
 				Description: fmt.Sprintf("test service %d", i),
+				Uri:         fmt.Sprintf("service-%d.example.com", i),
+				Annotations: map[string]string{
+					"annotation-key-1": "annotation-value-1",
+					"annotation-key-2": "annotation-value-2",
+				},
 			},
 		}
 
@@ -69,7 +74,6 @@ func TestServices(t *testing.T) {
 
 	var pageToken string
 	for i := 0; i < numServices/pageSize; i++ {
-		_ = i
 		req := &runpb.ListServicesRequest{
 			Parent:    parent,
 			PageSize:  int32(pageSize),
@@ -78,7 +82,7 @@ func TestServices(t *testing.T) {
 
 		res, err := serviceClient.ListServices(ctx, req)
 		if err != nil {
-			t.Errorf("failed to create service: %s", err)
+			t.Errorf("failed to list services: %s", err)
 			return
 		}
 
@@ -87,10 +91,20 @@ func TestServices(t *testing.T) {
 			{
 				Name:        fmt.Sprintf("%s/services/test-service-%d", parent, serviceNumber),
 				Description: fmt.Sprintf("test service %d", serviceNumber),
+				Uri:         fmt.Sprintf("service-%d.example.com", serviceNumber),
+				Annotations: map[string]string{
+					"annotation-key-1": "annotation-value-1",
+					"annotation-key-2": "annotation-value-2",
+				},
 			},
 			{
 				Name:        fmt.Sprintf("%s/services/test-service-%d", parent, serviceNumber-1),
 				Description: fmt.Sprintf("test service %d", serviceNumber-1),
+				Uri:         fmt.Sprintf("service-%d.example.com", serviceNumber-1),
+				Annotations: map[string]string{
+					"annotation-key-1": "annotation-value-1",
+					"annotation-key-2": "annotation-value-2",
+				},
 			},
 		}
 
@@ -104,5 +118,42 @@ func TestServices(t *testing.T) {
 
 	if pageToken != "" {
 		t.Errorf("pageToken should be empty at the last page, but got %s", pageToken)
+	}
+}
+
+func TestServices_Seed(t *testing.T) {
+	ctx := context.Background()
+
+	req := &runpb.ListServicesRequest{
+		Parent:   "projects/test-project/locations/us-central1",
+		PageSize: 5,
+	}
+
+	res, err := serviceClient.ListServices(ctx, req)
+	if err != nil {
+		t.Errorf("failed to list services: %s", err)
+		return
+	}
+
+	want := []*runpb.Service{
+		{
+			Name: "projects/test-project/locations/us-central1/services/service-1",
+			Annotations: map[string]string{
+				"annotation-1": "value-1",
+				"annotation-2": "value-2",
+			},
+		},
+		{
+			Name: "projects/test-project/locations/us-central1/services/service-2",
+			Annotations: map[string]string{
+				"annotation-1": "value-1",
+				"annotation-2": "value-2",
+			},
+		},
+	}
+
+	if diff := cmp.Diff(res.Services, want, protocmp.IgnoreFields(&runpb.Service{}, "create_time"), protocmp.Transform()); diff != "" {
+		t.Errorf("\n(-got, +want)\n%s", diff)
+		return
 	}
 }

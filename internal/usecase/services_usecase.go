@@ -36,7 +36,7 @@ func (u *ServicesUsecase) CreateService(ctx context.Context, req *runpb.CreateSe
 		return ErrEmptyService
 	}
 
-	service.Name = req.ServiceId
+	service.Name = fmt.Sprintf("%s/services/%s", req.Parent, req.ServiceId)
 	service.CreateTime = timestamppb.Now()
 
 	if err := u.repo.CreateService(ctx, req.Parent, service); err != nil {

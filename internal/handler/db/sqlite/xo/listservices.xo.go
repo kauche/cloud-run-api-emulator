@@ -12,6 +12,7 @@ type ListServices struct {
 	Name        string `json:"name"`        // name
 	Description string `json:"description"` // description
 	UID         string `json:"uid"`         // uid
+	URI         string `json:"uri"`         // uri
 	Generation  int    `json:"generation"`  // generation
 	CreatedAt   Time   `json:"created_at"`  // created_at
 }
@@ -24,6 +25,7 @@ func ListServicesByParentLimit(ctx context.Context, db DB, parent string, limit 
 		`    name,` +
 		`    description,` +
 		`    uid,` +
+		`    uri,` +
 		`    generation,` +
 		`    created_at` +
 		`  FROM services` +
@@ -47,7 +49,7 @@ func ListServicesByParentLimit(ctx context.Context, db DB, parent string, limit 
 	for rows.Next() {
 		var ls ListServices
 		// scan
-		if err := rows.Scan(&ls.Parent, &ls.Name, &ls.Description, &ls.UID, &ls.Generation, &ls.CreatedAt); err != nil {
+		if err := rows.Scan(&ls.Parent, &ls.Name, &ls.Description, &ls.UID, &ls.URI, &ls.Generation, &ls.CreatedAt); err != nil {
 			return nil, logerror(err)
 		}
 		res = append(res, &ls)

@@ -1,0 +1,11 @@
+services:
+
+  - name: projects/test-project/locations/us-central1/services/service-1
+    annotations:
+      annotation-1: value-1
+      annotation-2: value-2
+
+  - name: projects/test-project/locations/us-central1/services/service-2
+    annotations:
+      annotation-1: value-1
+      annotation-2: value-2
