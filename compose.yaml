@@ -10,7 +10,7 @@ services:
       - go-pkg-mod:/go/pkg/mod:cached
       - ${GOCACHE:-~/.cache/go-build}:/tmp/go-build
     working_dir: /go/src/github.com/kauche/cloud-run-api-emulator
-    command: go run -ldflags "-s -w -extldflags -static" ./cmd/cloud-run-api-emulator --data ./bin/cloud-run-api-emulator.db
+    command: go run -ldflags "-s -w -extldflags -static" ./cmd/cloud-run-api-emulator --data ./bin/cloud-run-api-emulator.db --seed ./internal/e2etest/testdata/seed.yaml
     environment:
       CGO_ENABLED: 0
       GOCACHE: /tmp/go-build

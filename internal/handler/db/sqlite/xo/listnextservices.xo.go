@@ -12,6 +12,7 @@ type ListNextServices struct {
 	Name        string `json:"name"`        // name
 	Description string `json:"description"` // description
 	UID         string `json:"uid"`         // uid
+	URI         string `json:"uri"`         // uri
 	Generation  int    `json:"generation"`  // generation
 	CreatedAt   Time   `json:"created_at"`  // created_at
 }
@@ -24,6 +25,7 @@ func ListNextServicesByParentCreatedAtNameLimit(ctx context.Context, db DB, pare
 		`    name,` +
 		`    description,` +
 		`    uid,` +
+		`    uri,` +
 		`    generation,` +
 		`    created_at` +
 		`  FROM services` +
@@ -49,7 +51,7 @@ func ListNextServicesByParentCreatedAtNameLimit(ctx context.Context, db DB, pare
 	for rows.Next() {
 		var lns ListNextServices
 		// scan
-		if err := rows.Scan(&lns.Parent, &lns.Name, &lns.Description, &lns.UID, &lns.Generation, &lns.CreatedAt); err != nil {
+		if err := rows.Scan(&lns.Parent, &lns.Name, &lns.Description, &lns.UID, &lns.URI, &lns.Generation, &lns.CreatedAt); err != nil {
 			return nil, logerror(err)
 		}
 		res = append(res, &lns)

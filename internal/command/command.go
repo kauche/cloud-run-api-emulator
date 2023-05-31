@@ -10,6 +10,7 @@ import (
 	"github.com/110y/servergroup"
 
 	"github.com/kauche/cloud-run-api-emulator/internal/handler/db/sqlite"
+	"github.com/kauche/cloud-run-api-emulator/internal/handler/db/yaml"
 	"github.com/kauche/cloud-run-api-emulator/internal/handler/grpc"
 	"github.com/kauche/cloud-run-api-emulator/internal/usecase"
 )
@@ -20,6 +21,7 @@ func Run() {
 
 func server(ctx context.Context) (code int) {
 	data := flag.String("data", "", "A database file path to persist the data")
+	seed := flag.String("seed", "", "A path to a YAML file that contains the seed data")
 
 	flag.Parse()
 
@@ -45,6 +47,21 @@ func server(ctx context.Context) (code int) {
 	suc := usecase.NewServicesUsecase(srepo)
 
 	gs := grpc.NewServer(8000, suc) // TODO: make the port configurable
+
+	if *seed != "" {
+		seedServices, err := yaml.GetSeeds(*seed)
+		if err != nil {
+			// TODO: structured log
+			fmt.Fprintf(os.Stderr, "failed to read the seed file: %s\n", err)
+			return 0
+		}
+
+		if err := srepo.CreateServices(ctx, seedServices); err != nil {
+			// TODO: structured log
+			fmt.Fprintf(os.Stderr, "failed to save the seed file: %s\n", err)
+			return 0
+		}
+	}
 
 	var sg servergroup.Group
 	sg.Add(gs)

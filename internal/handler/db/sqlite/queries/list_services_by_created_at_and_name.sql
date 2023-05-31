@@ -3,6 +3,7 @@ SELECT
     name,
     description,
     uid,
+    uri,
     generation,
     created_at
   FROM services
