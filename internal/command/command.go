@@ -58,7 +58,7 @@ func server(ctx context.Context) (code int) {
 
 		if err := srepo.CreateServices(ctx, seedServices); err != nil {
 			// TODO: structured log
-			fmt.Fprintf(os.Stderr, "failed to save the seed file: %s\n", err)
+			fmt.Fprintf(os.Stderr, "failed to save the seed services: %s\n", err)
 			return 0
 		}
 	}

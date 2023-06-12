@@ -31,6 +31,8 @@ func (r *ServicesRepository) CreateService(ctx context.Context, parent string, s
 		Name:        service.Name,
 		Description: service.Description,
 		URI:         service.Uri,
+		UID:         service.Uid,
+		Generation:  service.Generation,
 		CreatedAt:   xo.NewTime(service.CreateTime.AsTime()),
 	}
 
@@ -100,7 +102,7 @@ func (r *ServicesRepository) ListServices(ctx context.Context, parent string, li
 			Description: s.Description,
 			Uid:         s.UID,
 			Uri:         s.URI,
-			Generation:  int64(s.Generation),
+			Generation:  s.Generation,
 			CreateTime:  timestamppb.New(s.CreatedAt.Time()),
 		}
 
@@ -131,7 +133,7 @@ func (r *ServicesRepository) ListServicesByParentCreatedAtName(ctx context.Conte
 			Description: s.Description,
 			Uid:         s.UID,
 			Uri:         s.URI,
-			Generation:  int64(s.Generation),
+			Generation:  s.Generation,
 			CreateTime:  timestamppb.New(s.CreatedAt.Time()),
 		}
 

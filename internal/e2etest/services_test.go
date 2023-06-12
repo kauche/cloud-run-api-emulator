@@ -92,6 +92,7 @@ func TestServices(t *testing.T) {
 				Name:        fmt.Sprintf("%s/services/test-service-%d", parent, serviceNumber),
 				Description: fmt.Sprintf("test service %d", serviceNumber),
 				Uri:         fmt.Sprintf("service-%d.example.com", serviceNumber),
+				Generation:  0,
 				Annotations: map[string]string{
 					"annotation-key-1": "annotation-value-1",
 					"annotation-key-2": "annotation-value-2",
@@ -101,6 +102,7 @@ func TestServices(t *testing.T) {
 				Name:        fmt.Sprintf("%s/services/test-service-%d", parent, serviceNumber-1),
 				Description: fmt.Sprintf("test service %d", serviceNumber-1),
 				Uri:         fmt.Sprintf("service-%d.example.com", serviceNumber-1),
+				Generation:  0,
 				Annotations: map[string]string{
 					"annotation-key-1": "annotation-value-1",
 					"annotation-key-2": "annotation-value-2",
@@ -137,14 +139,18 @@ func TestServices_Seed(t *testing.T) {
 
 	want := []*runpb.Service{
 		{
-			Name: "projects/test-project/locations/us-central1/services/service-1",
+			Name:       "projects/test-project/locations/us-central1/services/service-1",
+			Uid:        "7de882f5-d2bc-4243-9fcd-90f982a7409e",
+			Generation: 1,
 			Annotations: map[string]string{
 				"annotation-1": "value-1",
 				"annotation-2": "value-2",
 			},
 		},
 		{
-			Name: "projects/test-project/locations/us-central1/services/service-2",
+			Name:       "projects/test-project/locations/us-central1/services/service-2",
+			Uid:        "a1e4b452-1737-418f-a4f9-34f128447391",
+			Generation: 2,
 			Annotations: map[string]string{
 				"annotation-1": "value-1",
 				"annotation-2": "value-2",
