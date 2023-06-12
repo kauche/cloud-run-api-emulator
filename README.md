@@ -9,7 +9,7 @@ Cloud Run API Emulator provides application developers with a locally-running, e
 Run cloud-run-api-emulator by using docker like below:
 
 ```
-$ docker run --publish 8000:8000 --detach ghcr.io/kauche/cloud-run-api-emulator:0.0.2
+$ docker run --publish 8000:8000 --detach ghcr.io/kauche/cloud-run-api-emulator:0.0.3
 ```
 
 And then, you can use the emulator through a gRPC client like below:
