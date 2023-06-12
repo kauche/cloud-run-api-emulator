@@ -13,7 +13,7 @@ type ListNextServices struct {
 	Description string `json:"description"` // description
 	UID         string `json:"uid"`         // uid
 	URI         string `json:"uri"`         // uri
-	Generation  int    `json:"generation"`  // generation
+	Generation  int64  `json:"generation"`  // generation
 	CreatedAt   Time   `json:"created_at"`  // created_at
 }
 

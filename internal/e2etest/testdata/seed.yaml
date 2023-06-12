@@ -1,11 +1,15 @@
 services:
 
   - name: projects/test-project/locations/us-central1/services/service-1
+    uid: 7de882f5-d2bc-4243-9fcd-90f982a7409e
+    generation: 1
     annotations:
       annotation-1: value-1
       annotation-2: value-2
 
   - name: projects/test-project/locations/us-central1/services/service-2
+    uid: a1e4b452-1737-418f-a4f9-34f128447391
+    generation: 2
     annotations:
       annotation-1: value-1
       annotation-2: value-2

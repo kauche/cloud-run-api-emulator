@@ -12,7 +12,7 @@ type Service struct {
 	Name        string `json:"name"`        // name
 	Description string `json:"description"` // description
 	UID         string `json:"uid"`         // uid
-	Generation  int    `json:"generation"`  // generation
+	Generation  int64  `json:"generation"`  // generation
 	URI         string `json:"uri"`         // uri
 	CreatedAt   Time   `json:"created_at"`  // created_at
 	// xo fields
