@@ -1,6 +1,6 @@
 # Cloud Run API Emulator
 
-#### :warning: This project is still in the super experimental phase :warning:
+#### ⚠️ This project is still in the super experimental phase ⚠️
 
 Cloud Run API Emulator provides application developers with a locally-running, emulated instance of Cloud Run API to enable local development and testing.
 
