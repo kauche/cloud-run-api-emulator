@@ -1,4 +1,4 @@
-FROM golang:1.20.4-bullseye AS builder
+FROM golang:1.25.3-trixie AS builder
 
 ARG TARGETOS
 ARG TARGETARCH
